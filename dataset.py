@@ -1,24 +1,6 @@
 import numpy as np
 import tensorflow as tf
 
-def get_dataset():
-    DATA_URL = 'https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz'
-
-    path = tf.keras.utils.get_file('mnist.npz', DATA_URL)
-    with np.load(path) as data:
-        train_examples = data['x_train']
-        train_labels = data['y_train']
-        test_examples = data['x_test']
-        test_labels = data['y_test']
-
-    for el in data:
-        print(el)
-
-    train_dataset = tf.data.Dataset.from_tensor_slices((train_examples, train_labels))
-    test_dataset = tf.data.Dataset.from_tensor_slices((test_examples, test_labels))
-
-    return train_dataset,test_dataset
-
 def get_features(example_proto):
     features = {
         "image/encoded": tf.io.FixedLenFeature([], tf.string),
@@ -60,7 +42,7 @@ def get_dataset_TFRecord():
     dataset = dataset.shuffle(10000)
 
     # take only dataset of length batch_size
-    dataset = dataset.batch(100)
+    dataset = dataset.batch(batch_size)
 
     # make sure you can repeatedly take datasets from the TFRecord
     dataset = dataset.repeat()
@@ -80,17 +62,21 @@ def get_dataset_TFRecord():
         example.ParseFromString(el.numpy())
         print(example)
     """
-def prepare(trainDataset,testDataset):
-    BATCH_SIZE = 64
-    SHUFFLE_BUFFER_SIZE = 100
+def get_dataset_TFRecord_test():
+    tfrecordList = ['/home/radek/Projects/ImageClassifier/TFRecords/test/test-00000-of-00004.tfrecord']
+    """,
+                   '/home/radek/Projects/ImageClassifier/TFRecords/test/test-00001-of-00004.tfrecord',
+                   '/home/radek/Projects/ImageClassifier/TFRecords/test/test-00002-of-00004.tfrecord',
+                   '/home/radek/Projects/ImageClassifier/TFRecords/test/test-00003-of-00004.tfrecord']"""
+    dataset = tf.data.TFRecordDataset(filenames=[tfrecordList])
+    for el in dataset.take(1):
+        print(repr(el))
+        image,label=get_futures_and_edit(el)
+        print("LABEL= "+repr(label))
 
-    #below functions return dataset
-    trainDataset=trainDataset.shuffle(SHUFFLE_BUFFER_SIZE).batch(BATCH_SIZE)
-    testDataset=testDataset.batch(BATCH_SIZE)
-
-    return trainDataset, testDataset
 
 if __name__=='__main__':
-    get_dataset_TFRecord()
+    #get_dataset_TFRecord()
     #get_dataset()
+    get_dataset_TFRecord_test()
 
