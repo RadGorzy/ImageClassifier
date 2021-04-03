@@ -75,5 +75,8 @@ def build():
 
     return model
 
-def train(model,dataset,stepsPerEpoch,callback):
-    model.fit(dataset,epochs=1,steps_per_epoch=stepsPerEpoch,callbacks=callback)
+def train(model,dataset,epochs,stepsPerEpoch,callback):
+    model.fit(dataset,epochs=epochs,steps_per_epoch=stepsPerEpoch,callbacks=callback)
+
+    #NOTE:The train  acccuracy (when no validation_data parameter is supplied, so we dont test against validation dataset) displayed as for ex. "categorical_accuracy"
+    # given by keras is an average train accuracy in current batch! not current train accuracy. So current train accuracy of epoch 1 is displayed only after first batch in epoch 2.
