@@ -15,7 +15,7 @@ def get_features(example_proto):
 def edit(feature, label,resize=0):
     image = tf.image.decode_jpeg(feature, channels=1)  # image_raw
     if resize == 1:
-        image = tf.image.resize_image_with_crop_or_pad(image, 299,
+        image = tf.image.resize_with_pad(image, 299,
                                                        299)  # cropped image with size 299x299
     image = tf.multiply(tf.cast(image, tf.float32), 1.0 / 255.0) #from uint8 to float32 and from 0-255 do 0-1
     if label>=1:
