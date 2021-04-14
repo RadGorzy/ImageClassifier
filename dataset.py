@@ -27,13 +27,8 @@ def get_futures_and_edit(example_proto):
     feature,_,_,_,label=get_features(example_proto)
     return edit(feature,label,resize=0)
 
-def get_dataset_TFRecord():
-    batch_size=100
-    tfrecordList=['/home/radek/Projects/ImageClassifier/TFRecords/test/test-00000-of-00004.tfrecord']
-    """,
-                   '/home/radek/Projects/ImageClassifier/TFRecords/test/test-00001-of-00004.tfrecord',
-                   '/home/radek/Projects/ImageClassifier/TFRecords/test/test-00002-of-00004.tfrecord',
-                   '/home/radek/Projects/ImageClassifier/TFRecords/test/test-00003-of-00004.tfrecord']"""
+def get_dataset_TFRecord(tfrecordList,batchSize):
+
     dataset = tf.data.TFRecordDataset(filenames=[tfrecordList])
     num_samples=0
     for el in dataset:
@@ -45,13 +40,13 @@ def get_dataset_TFRecord():
     dataset = dataset.shuffle(10000,reshuffle_each_iteration=True)
 
     # take only dataset of length batch_size
-    dataset = dataset.batch(batch_size)
+    dataset = dataset.batch(batchSize)
 
     # make sure you can repeatedly take datasets from the TFRecord
     dataset = dataset.repeat()
 
     # Return the dataset.
-    return dataset, num_samples, batch_size
+    return dataset, num_samples
     """
     datasetLen=0
     for el in dataset:
