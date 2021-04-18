@@ -2,6 +2,7 @@ import tensorflow as tf
 from tensorflow.keras.layers import Conv2D, MaxPool2D, Flatten, Dense, Dropout, Input
 from tensorflow.keras.optimizers import Adam
 
+
 def build():
 
 
@@ -80,3 +81,9 @@ def train(model,trainDataset,epochs,trainStepsPerEpoch,validationDataset,validat
 
     #NOTE:The train  acccuracy (when no validation_data parameter is supplied, so we dont test against validation dataset) displayed as for ex. "categorical_accuracy"
     # given by keras is an average train accuracy in current batch! not current train accuracy. So current train accuracy of epoch 1 is displayed only after first batch in epoch 2.
+
+def save(model,filePath):
+    model.save(filePath)
+
+def load(filePath):
+    return tf.keras.models.load_model(filePath)

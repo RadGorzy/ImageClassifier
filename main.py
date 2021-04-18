@@ -6,11 +6,18 @@ import datetime
 
 _BATCH_SIZE = 100
 _EPOCHS = 5
+_MODEL_SAVE_PATH = "/home/radek/Projects/ImageClassifier/data/models"
 def main():
-    trainDataset, trainNumSamples = mdataset.get_dataset_TFRecord(['/home/radek/Projects/ImageClassifier/data/TFRecords/train/train-00000-of-00004.tfrecord'],_BATCH_SIZE)
+    trainDataset, trainNumSamples = mdataset.get_dataset_TFRecord(['/home/radek/Projects/ImageClassifier/data/TFRecords/train/train-00000-of-00004.tfrecord',
+                                                                   '/home/radek/Projects/ImageClassifier/data/TFRecords/train/train-00001-of-00004.tfrecord',
+                                                                   '/home/radek/Projects/ImageClassifier/data/TFRecords/train/train-00002-of-00004.tfrecord',
+                                                                   '/home/radek/Projects/ImageClassifier/data/TFRecords/train/train-00003-of-00004.tfrecord',],_BATCH_SIZE)
     print("Training on {} images".format(trainNumSamples))
 
-    validDataset, validNumSamples = mdataset.get_dataset_TFRecord(['/home/radek/Projects/ImageClassifier/data/TFRecords/test/test-00000-of-00004.tfrecord'],_BATCH_SIZE)
+    validDataset, validNumSamples = mdataset.get_dataset_TFRecord(['/home/radek/Projects/ImageClassifier/data/TFRecords/test/test-00000-of-00004.tfrecord',
+                                                                   '/home/radek/Projects/ImageClassifier/data/TFRecords/test/test-00001-of-00004.tfrecord',
+                                                                   '/home/radek/Projects/ImageClassifier/data/TFRecords/test/test-00002-of-00004.tfrecord',
+                                                                   '/home/radek/Projects/ImageClassifier/data/TFRecords/test/test-00003-of-00004.tfrecord',],_BATCH_SIZE)
     print("Validating on {} images".format(validNumSamples))
 
     trainStepsPerEpoch = trainNumSamples // _BATCH_SIZE
@@ -22,6 +29,8 @@ def main():
     tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
 
     mmodel.train(model, trainDataset, _EPOCHS, trainStepsPerEpoch,validDataset,validationSteps,[tensorboard_callback])
+
+    model.save(_MODEL_SAVE_PATH)
 
 if __name__ == '__main__':
     main()
