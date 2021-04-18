@@ -61,7 +61,7 @@ def get_dataset_TFRecord(tfrecordList,batchSize):
         print(example)
     """
 def get_dataset_TFRecord_test():
-    tfrecordList = ['/home/radek/Projects/ImageClassifier/TFRecords/test/test-00000-of-00004.tfrecord']
+    tfrecordList = ['/home/radek/Projects/ImageClassifier/data/TFRecords/test/test-00000-of-00004.tfrecord']
     """,
                    '/home/radek/Projects/ImageClassifier/TFRecords/test/test-00001-of-00004.tfrecord',
                    '/home/radek/Projects/ImageClassifier/TFRecords/test/test-00002-of-00004.tfrecord',

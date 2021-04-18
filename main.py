@@ -7,10 +7,10 @@ import datetime
 _BATCH_SIZE = 100
 _EPOCHS = 5
 def main():
-    trainDataset, trainNumSamples = mdataset.get_dataset_TFRecord(['/home/radek/Projects/ImageClassifier/TFRecords/test/test-00000-of-00004.tfrecord'],_BATCH_SIZE)
+    trainDataset, trainNumSamples = mdataset.get_dataset_TFRecord(['/home/radek/Projects/ImageClassifier/data/TFRecords/train/train-00000-of-00004.tfrecord'],_BATCH_SIZE)
     print("Training on {} images".format(trainNumSamples))
 
-    validDataset, validNumSamples = mdataset.get_dataset_TFRecord(['/home/radek/Projects/ImageClassifier/TFRecords/test/test-00001-of-00004.tfrecord'],_BATCH_SIZE)
+    validDataset, validNumSamples = mdataset.get_dataset_TFRecord(['/home/radek/Projects/ImageClassifier/data/TFRecords/test/test-00000-of-00004.tfrecord'],_BATCH_SIZE)
     print("Validating on {} images".format(validNumSamples))
 
     trainStepsPerEpoch = trainNumSamples // _BATCH_SIZE
